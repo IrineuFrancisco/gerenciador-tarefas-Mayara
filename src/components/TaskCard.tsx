@@ -108,19 +108,21 @@ export default function TaskCard({ task, isOverlay, onDeleteTask, onUpdateTask }
         {task.operationType && <div><strong className="text-slate-300">Operação:</strong> {task.operationType}</div>}
         {task.value !== undefined && <div><strong className="text-slate-300">Valor:</strong> {task.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>}
         
-        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-700/50">
-          <strong className="text-slate-300">Progresso:</strong>
-          <button 
+        <div className="flex flex-col gap-1.5 mt-2 pt-2 border-t border-slate-700/50">
+          <strong className="text-slate-300">Anotação/Progresso:</strong>
+          <textarea 
             onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => { e.stopPropagation(); if(onUpdateTask) onUpdateTask({...task, progress: Math.max(0, (task.progress || 0) - 1)}) }}
-            className="w-5 h-5 rounded bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 transition-colors"
-          >-</button>
-          <span className="text-slate-200 font-medium w-4 text-center">{task.progress || 0}</span>
-          <button 
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => { e.stopPropagation(); if(onUpdateTask) onUpdateTask({...task, progress: (task.progress || 0) + 1}) }}
-            className="w-5 h-5 rounded bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 transition-colors"
-          >+</button>
+            onKeyDown={(e) => e.stopPropagation()}
+            defaultValue={task.progressText || ''}
+            onBlur={(e) => {
+              if (onUpdateTask && e.target.value !== task.progressText) {
+                onUpdateTask({...task, progressText: e.target.value});
+              }
+            }}
+            placeholder="Atualize o status aqui..."
+            className="w-full bg-slate-900/50 border border-slate-700/50 rounded-lg px-2 py-1.5 text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary/50 text-xs resize-none"
+            rows={2}
+          />
         </div>
       </div>
 

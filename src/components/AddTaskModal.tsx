@@ -48,7 +48,7 @@ export default function AddTaskModal({ onClose, onAddTask }: AddTaskModalProps) 
       client: client.trim(),
       operationType: operationType.trim(),
       value: value ? parseFloat(value.replace(',', '.')) : undefined,
-      progress: 0,
+      progressText: '',
       createdAt: Date.now(),
     };
 

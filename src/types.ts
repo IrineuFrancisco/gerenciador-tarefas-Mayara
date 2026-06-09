@@ -12,6 +12,6 @@ export interface Task {
   client: string;
   operationType: string;
   value?: number;
-  progress?: number;
+  progressText?: string;
   createdAt: number;
 }
