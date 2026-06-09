@@ -9,9 +9,10 @@ interface TaskCardProps {
   task: Task;
   isOverlay?: boolean;
   onDeleteTask?: (id: string) => void;
+  onUpdateTask?: (task: Task) => void;
 }
 
-export default function TaskCard({ task, isOverlay, onDeleteTask }: TaskCardProps) {
+export default function TaskCard({ task, isOverlay, onDeleteTask, onUpdateTask }: TaskCardProps) {
   const {
     setNodeRef,
     attributes,
@@ -106,6 +107,21 @@ export default function TaskCard({ task, isOverlay, onDeleteTask }: TaskCardProp
         {task.client && <div><strong className="text-slate-300">Cliente:</strong> {task.client}</div>}
         {task.operationType && <div><strong className="text-slate-300">Operação:</strong> {task.operationType}</div>}
         {task.value !== undefined && <div><strong className="text-slate-300">Valor:</strong> {task.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>}
+        
+        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-700/50">
+          <strong className="text-slate-300">Progresso:</strong>
+          <button 
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); if(onUpdateTask) onUpdateTask({...task, progress: Math.max(0, (task.progress || 0) - 1)}) }}
+            className="w-5 h-5 rounded bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 transition-colors"
+          >-</button>
+          <span className="text-slate-200 font-medium w-4 text-center">{task.progress || 0}</span>
+          <button 
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); if(onUpdateTask) onUpdateTask({...task, progress: (task.progress || 0) + 1}) }}
+            className="w-5 h-5 rounded bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 transition-colors"
+          >+</button>
+        </div>
       </div>
 
       <div className="mt-auto pt-3 flex items-center justify-between text-xs text-slate-500 border-t border-slate-700/50">

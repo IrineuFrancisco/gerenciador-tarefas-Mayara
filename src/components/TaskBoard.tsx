@@ -28,6 +28,10 @@ export default function TaskBoard({ tasks, setTasks }: TaskBoardProps) {
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
   };
 
+  const handleUpdateTask = (updatedTask: Task) => {
+    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -123,9 +127,9 @@ export default function TaskBoard({ tasks, setTasks }: TaskBoardProps) {
       onDragEnd={handleDragEnd}
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <TaskColumn id="todo" title="A Fazer" tasks={tasks.filter((t) => t.status === 'todo')} onDeleteTask={handleDeleteTask} />
-        <TaskColumn id="in-progress" title="Em Progresso" tasks={tasks.filter((t) => t.status === 'in-progress')} onDeleteTask={handleDeleteTask} />
-        <TaskColumn id="done" title="Concluído" tasks={tasks.filter((t) => t.status === 'done')} onDeleteTask={handleDeleteTask} />
+        <TaskColumn id="todo" title="A Fazer" tasks={tasks.filter((t) => t.status === 'todo')} onDeleteTask={handleDeleteTask} onUpdateTask={handleUpdateTask} />
+        <TaskColumn id="in-progress" title="Em Progresso" tasks={tasks.filter((t) => t.status === 'in-progress')} onDeleteTask={handleDeleteTask} onUpdateTask={handleUpdateTask} />
+        <TaskColumn id="done" title="Concluído" tasks={tasks.filter((t) => t.status === 'done')} onDeleteTask={handleDeleteTask} onUpdateTask={handleUpdateTask} />
       </div>
 
       <DragOverlay>
