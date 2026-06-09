@@ -77,7 +77,7 @@ export default function Header({ tasks, onAddTaskClick, onClearTasks }: HeaderPr
       <div>
         <div className="flex items-center gap-2 mb-1">
           <div className="rounded-xl overflow-hidden flex items-center justify-center">
-            <img src="/gerenciador-tarefas/icon.png" alt="Ícone" className="h-12 w-auto object-contain" />
+            <img src="/gerenciador-tarefas-Mayara/icon.png" alt="Ícone" className="h-12 w-auto object-contain" />
           </div>
           <h1 className="text-3xl font-bold text-slate-100">
             Mayara Lourençoni Quatrochi
